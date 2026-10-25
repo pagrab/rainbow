@@ -1,0 +1,1873 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>At the End of the Rainbow — Companion Website</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Inter + Silkscreen + Press Start 2P -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Inter"', 'sans-serif'],
+                        pixel: ['"Silkscreen"', 'cursive'],
+                        arcade: ['"Press Start 2P"', 'monospace']
+                    },
+                    colors: {
+                        'rainbow-yellow': '#fde047',
+                        'rainbow-lime': '#bef264',
+                        'rainbow-pink': '#f472b6',
+                        'rainbow-purple': '#c084fc',
+                        'rainbow-blue': '#93c5fd',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Cover-inspired rainbow mesh gradient */
+        .cover-gradient-bg {
+            background: linear-gradient(
+                135deg, 
+                rgba(254, 240, 138, 0.45) 0%, 
+                rgba(244, 114, 182, 0.35) 35%, 
+                rgba(192, 132, 252, 0.3) 65%, 
+                rgba(147, 197, 253, 0.4) 100%
+            );
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+        }
+
+        /* View transition animation styles */
+        .view-panel {
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
+        .view-hidden {
+            display: none !important;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .view-visible {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Lightbox transitions */
+        .lightbox-overlay {
+            transition: opacity 0.25s ease-in-out, visibility 0.25s ease-in-out;
+        }
+
+        .lightbox-overlay.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .lightbox-overlay.inactive {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .lightbox-content {
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .lightbox-overlay.active .lightbox-content {
+            transform: scale(1);
+        }
+
+        .lightbox-overlay.inactive .lightbox-content {
+            transform: scale(0.92);
+        }
+
+        /* Scanline effect */
+        .retro-scanline {
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.02) 50%
+            );
+            background-size: 100% 4px;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-stone-900 bg-stone-50 min-h-screen flex flex-col justify-between selection:bg-pink-200">
+
+    <!-- Top Sticky Header Bar -->
+    <header class="w-full py-4 px-6 border-b border-stone-200/80 bg-white/80 backdrop-blur-md sticky top-0 z-40">
+        <div class="max-w-5xl mx-auto flex items-center justify-between">
+            <button onclick="navigateTo('main')" class="flex items-center gap-2 group text-left">
+                <span class="w-3 h-3 rounded-full bg-yellow-400 inline-block group-hover:scale-125 transition-transform"></span>
+                <span class="w-3 h-3 rounded-full bg-pink-400 inline-block group-hover:scale-125 transition-transform"></span>
+                <span class="w-3 h-3 rounded-full bg-indigo-400 inline-block group-hover:scale-125 transition-transform"></span>
+                <span class="font-pixel text-xs text-stone-700 tracking-wider ml-1 uppercase group-hover:text-stone-950 transition-colors">
+                    At the End of the Rainbow
+                </span>
+            </button>
+
+            <!-- Breadcrumb / Status Indicator -->
+            <div id="nav-status" class="font-pixel text-[11px] text-stone-500 uppercase flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>Main page</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        
+        <!-- ================================================================= -->
+        <!-- 1. MAIN GRID VIEW (HOME VIEW) -->
+        <!-- ================================================================= -->
+        <div id="main-view" class="view-panel view-visible">
+            
+            <!-- Hero Header with Soft Gradient Background -->
+            <section class="relative cover-gradient-bg pt-10 pb-16 px-6 overflow-hidden border-b border-stone-200/50">
+                <div class="absolute top-10 left-1/4 w-72 h-72 bg-yellow-300/30 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute top-1/3 right-1/4 w-80 h-80 bg-purple-300/30 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="max-w-4xl mx-auto text-center relative z-10">
+                    <h1 class="font-extrabold tracking-tight text-stone-950 text-4xl sm:text-6xl md:text-7xl leading-none mb-4">
+                        At the End of<br class="hidden sm:inline" /> the Rainbow
+                    </h1>
+                    
+                    <p class="text-base sm:text-xl font-medium text-stone-800 max-w-2xl mx-auto mb-3 tracking-tight">
+                        The Identity Crisis of the Atari 8-Bit Computer
+                    </p>
+
+                    <div class="inline-block px-4 py-1.5 rounded-full bg-white/80 backdrop-blur border border-stone-200 shadow-sm mb-8">
+                        <span class="font-semibold text-stone-900 text-sm sm:text-base">Paweł Grabarczyk</span>
+                    </div>
+
+                    
+
+                    
+                </div>
+            </section>
+
+            <!-- 4 Panel Selection Grid -->
+            <section class="max-w-5xl mx-auto px-6 py-14">
+                <div class="text-center mb-10">
+                    <h2 class="font-pixel text-base sm:text-lg text-stone-800 uppercase tracking-widest mb-2">
+                        Select  a panel
+                    </h2>
+                    <p class="text-xs font-mono text-stone-500">Click any panel to expand</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    
+                    <!-- Panel 1: About the Book -->
+                    <div onclick="navigateTo('detail-about')" 
+                         class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border-l-4 border-l-yellow-400 cursor-pointer group flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="font-pixel text-xs text-yellow-700 bg-yellow-100 px-3 py-1 rounded-md group-hover:bg-yellow-200 transition-colors">
+                                    01 / OVERVIEW
+                                </span>
+                                <span class="text-xs font-pixel text-stone-400 group-hover:text-yellow-600 transition-colors flex items-center gap-1">
+                                    EXPAND <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                                </span>
+                            </div>
+                            <h3 class="font-pixel text-lg text-stone-900 mb-3 group-hover:text-yellow-600 transition-colors">
+                                About the Book
+                            </h3>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">
+                                An in-depth investigation into Atari’s 8-bit computers, detailing hardware innovations, architectural compromises, and market positioning identity crises.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-stone-200/60 flex items-center justify-between text-xs font-mono text-stone-500">
+                            <span class="font-bold text-yellow-600">LEARN MORE →</span>
+                        </div>
+                    </div>
+
+                    <!-- Panel 2: Color Supplements -->
+                    <div onclick="navigateTo('detail-supplements')" 
+                         class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border-l-4 border-l-pink-400 cursor-pointer group flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="font-pixel text-xs text-pink-700 bg-pink-100 px-3 py-1 rounded-md group-hover:bg-pink-200 transition-colors">
+                                    02 / GALLERY
+                                </span>
+                                <span class="text-xs font-pixel text-stone-400 group-hover:text-pink-600 transition-colors flex items-center gap-1">
+                                    EXPAND <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                                </span>
+                            </div>
+                            <h3 class="font-pixel text-lg text-stone-900 mb-3 group-hover:text-pink-600 transition-colors">
+                                Color Supplements
+                            </h3>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">
+                                Color versions of the figures found in the book.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-stone-200/60 flex items-center justify-between text-xs font-mono text-stone-500">
+                            <span class="font-bold text-pink-600">VIEW GALLERY →</span>
+                        </div>
+                    </div>
+
+                    <!-- Panel 3: Related Events -->
+                    <div onclick="navigateTo('detail-events')" 
+                         class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border-l-4 border-l-indigo-400 cursor-pointer group flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="font-pixel text-xs text-indigo-700 bg-indigo-100 px-3 py-1 rounded-md group-hover:bg-indigo-200 transition-colors">
+                                    03 / CALENDAR
+                                </span>
+                                <span class="text-xs font-pixel text-stone-400 group-hover:text-indigo-600 transition-colors flex items-center gap-1">
+                                    EXPAND <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                                </span>
+                            </div>
+                            <h3 class="font-pixel text-lg text-stone-900 mb-3 group-hover:text-indigo-600 transition-colors">
+                                Related Events
+                            </h3>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">
+                                Schedule of upcoming talks, museum presentations, book signings, retrocomputing panels, and author streams.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-stone-200/60 flex items-center justify-between text-xs font-mono text-stone-500">
+                            <span class="font-bold text-indigo-600">SEE SCHEDULE →</span>
+                        </div>
+                    </div>
+
+                    <!-- Panel 4: Reviews & Press -->
+                    <div onclick="navigateTo('detail-reviews')" 
+                         class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border-l-4 border-l-purple-400 cursor-pointer group flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="font-pixel text-xs text-purple-700 bg-purple-100 px-3 py-1 rounded-md group-hover:bg-purple-200 transition-colors">
+                                    04 / PRESS & REVIEWS
+                                </span>
+                                <span class="text-xs font-pixel text-stone-400 group-hover:text-purple-600 transition-colors flex items-center gap-1">
+                                    EXPAND <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                                </span>
+                            </div>
+                            <h3 class="font-pixel text-lg text-stone-900 mb-3 group-hover:text-purple-600 transition-colors">
+                                Reviews & Press
+                            </h3>
+                            <p class="text-stone-600 text-sm leading-relaxed mb-4">
+                                Endorsements. Reviews from academic and popular magazines.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-stone-200/60 flex items-center justify-between text-xs font-mono text-stone-500">
+                            <span class="font-bold text-purple-600">READ REVIEWS →</span>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+
+        <!-- ================================================================= -->
+        <!-- 2. DETAIL VIEW 1: ABOUT THE BOOK (EXPANDED SUBPAGE) -->
+        <!-- ================================================================= -->
+        <div id="detail-about" class="view-panel view-hidden max-w-5xl mx-auto px-6 py-10">
+            
+            <!-- Retro Back Button Bar -->
+            <div class="mb-8 flex items-center justify-between border-b border-stone-200 pb-4">
+                <button type="button" data-nav="main" 
+                        class="btn-back px-4 py-2 rounded-xl bg-white border border-stone-300 shadow-sm hover:bg-stone-100 hover:border-stone-400 text-stone-800 font-pixel text-xs flex items-center gap-2 transition-all cursor-pointer z-10">
+                    <i class="fa-solid fa-chevron-left text-yellow-500 pointer-events-none"></i>
+                    <span class="pointer-events-none">← BACK TO MAIN</span>
+                </button>
+                <span class="font-pixel text-xs text-yellow-600 bg-yellow-100 px-3 py-1.5 rounded-lg border border-yellow-200">
+                    01: ABOUT THE BOOK
+                </span>
+            </div>
+
+            <!-- Big Expanded Content Banner -->
+            <div class="cover-gradient-bg rounded-3xl p-8 sm:p-12 border border-stone-200/80 shadow-md mb-10 relative overflow-hidden">
+                <div class="max-w-3xl">
+                    <h1 class="font-extrabold text-3xl sm:text-5xl text-stone-950 tracking-tight mb-4 leading-tight">
+                        At the End of the Rainbow
+                    </h1>
+                    <p class="text-stone-800 text-lg sm:text-xl font-medium mb-6">
+                        The Identity Crisis of the Atari 8-Bit Computer
+                    </p>
+                    <div class="flex flex-wrap items-center gap-4 text-xs font-mono text-stone-700 bg-white/70 backdrop-blur p-3 rounded-xl border border-white/80 inline-flex">
+                        <div><strong class="text-stone-900">Author:</strong> Paweł Grabarczyk</div>
+                        <div>•</div>
+                        <div><strong class="text-stone-900">Publisher:</strong> MIT Press</div>
+                        <div>•</div>
+                        <div><strong class="text-stone-900">Pages:</strong> 328</div>
+                        <div>•</div>
+                        <div><strong class="text-stone-900">ISBN:</strong> 978-0262054690</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rich Body Content Sections -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Main Column: Summary and Outline -->
+                <div class="lg:col-span-2 space-y-8">
+                    
+                    <!-- Executive Summary -->
+                    <div class="bg-white p-8 rounded-2xl border border-stone-200 shadow-sm">
+                        <h2 class="font-pixel text-sm text-stone-900 mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-bookmark text-yellow-500"></i> SUMMARY
+                        </h2>
+                        <div class="space-y-4 text-stone-700 leading-relaxed text-sm" style="text-align: justify;">
+                            <p>
+                                Throughout the late 1970s and early 1980s, Atari became synonymous with arcade gaming, producing iconic games such as Pong and Asteroids. Yet the company’s ambitions extended beyond games and consoles. In 1979, Atari launched its first 8-bit computer—a platform initially designed as a console before its release into the market as a computer. This ambiguous identity produced a curious marketing campaign that downplayed the computer’s main selling point as a gaming machine; within three years, Atari had switched tactics and repackaged the computer as a console. In At the End of the Rainbow, Paweł Grabarczyk examines how a device that had to shed its image as a “glorified console” later became a console accused of being a computer in disguise, resulting in its varied reception across the globe.
+
+                            </p>
+                            <p>
+                                As the Atari 8-bit platform faded into obsolescence in the West, it found unexpected success in other parts of the world—Chile, Eastern Europe, and especially in socialist Poland, where it led the digital revolution and kickstarted the domestic gaming industry. Grabarczyk traces these divergent trajectories across capitalist and socialist contexts and explores how the platform’s fate sparked a larger debate about the boundaries between console and computer, between playful and serious users—and about the very purpose of computing itself.
+
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Chapter Breakdown -->
+                    <div class="bg-white p-8 rounded-2xl border border-stone-200 shadow-sm">
+                        <h2 class="font-pixel text-sm text-stone-900 mb-6 flex items-center gap-2">
+                            <i class="fa-solid fa-list-ol text-yellow-500"></i> List of Chapters
+                        </h2>
+                        
+                        <div class="space-y-4">
+                            <div class="p-4 rounded-xl bg-stone-50 border border-stone-200">
+                                <span class="font-pixel text-[10px] text-yellow-600 block mb-1">INTRODUCTION</span>
+                                <h3 class="font-bold text-stone-900 text-sm">What Is the Atari 8-Bit Platform?</h3>
+                                <p class="text-stone-600 text-xs mt-1">A brief overview of the members of the Atari 8-bit family and the theoretical frameworks applied throughout the book.</p>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-stone-50 border border-stone-200">
+                                <span class="font-pixel text-[10px] text-yellow-600 block mb-1">CHAPTER 1</span>
+                                <h3 class="font-bold text-stone-900 text-sm">Do You Need a Computer at Home?</h3>
+                                <p class="text-stone-600 text-xs mt-1">How Atari struggled to market its newly defined "home computer" category and fought an uphill battle to shed its image as a mere "game company."</p>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-stone-50 border border-stone-200">
+                                <span class="font-pixel text-[10px] text-yellow-600 block mb-1">CHAPTER 2</span>
+                                <h3 class="font-bold text-stone-900 text-sm">Educate Yourself!</h3>
+                                <p class="text-stone-600 text-xs mt-1">How Atari found the ideal vessel to frame a gaming machine as something practical and "useful"—educational software.</p>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-stone-50 border border-stone-200">
+                                <span class="font-pixel text-[10px] text-yellow-600 block mb-1">CHAPTER 3</span>
+                                <h3 class="font-bold text-stone-900 text-sm">Learn Programming</h3>
+                                <p class="text-stone-600 text-xs mt-1">An exploration of the polarized world of Atari 8-bit programming—from the deceptive simplicity of BASIC to the mind-bending complexity of assembly language.</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-stone-50 border border-stone-200">
+                                <span class="font-pixel text-[10px] text-yellow-600 block mb-1">CHAPTER 4</span>
+                                <h3 class="font-bold text-stone-900 text-sm">Home Office, Home Studio</h3>
+                                <p class="text-stone-600 text-xs mt-1">How Atari 8-bit users touched the future of modern computing through early internet browsing, word processing, and graphics tablet illustration.</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-stone-50 border border-stone-200">
+                                <span class="font-pixel text-[10px] text-yellow-600 block mb-1">CHAPTER 5</span>
+                                <h3 class="font-bold text-stone-900 text-sm">The Birth of PC Gaming (As We Know It)</h3>
+                                <p class="text-stone-600 text-xs mt-1">What happens when a gaming machine equipped with a keyboard embraces its true identity? How the early Atari game market mirrored today's contrast between AAA and indie games.</p>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-stone-50 border border-stone-200">
+                                <span class="font-pixel text-[10px] text-yellow-600 block mb-1">CHAPTER 6</span>
+                                <h3 class="font-bold text-stone-900 text-sm">Changing identity</h3>
+                                <p class="text-stone-600 text-xs mt-1">A console prototype becomes a home computer, only to be repackaged as a console once again three years later—the tragic tale of the Atari 5200’s wasted potential.</p>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-stone-50 border border-stone-200">
+                                <span class="font-pixel text-[10px] text-yellow-600 block mb-1">CHAPTER 7</span>
+                                <h3 class="font-bold text-stone-900 text-sm">Atari Overeas</h3>
+                                <p class="text-stone-600 text-xs mt-1">How Atari attempted to expand abroad using a US-focused marketing strategy, and how it eventually pivoted to find relative success.</p>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-stone-50 border border-stone-200">
+                                <span class="font-pixel text-[10px] text-yellow-600 block mb-1">CHAPTER 8</span>
+                                <h3 class="font-bold text-stone-900 text-sm">The East Side Story: Atari Arrives To Poland</h3>
+                                <p class="text-stone-600 text-xs mt-1">How a computer that failed to dominate Western markets brought personal computing to a socialist country and single-handedly built its gaming industry.</p>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-stone-50 border border-stone-200">
+                                <span class="font-pixel text-[10px] text-yellow-600 block mb-1">CHAPTER 9</span>
+                                <h3 class="font-bold text-stone-900 text-sm">The People’s Computer</h3>
+                                <p class="text-stone-600 text-xs mt-1">How a dedicated retro community has kept the Atari 8-bit alive for more than three decades.</p>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-stone-50 border border-stone-200">
+                                <span class="font-pixel text-[10px] text-yellow-600 block mb-1">CONCLUSION</span>
+                                <p class="text-stone-600 text-xs mt-1">A TLDR for the impatient</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Sidebar Column: Author Bio & Details -->
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
+                        <h3 class="font-pixel text-xs text-stone-800 mb-3 uppercase">About the Author</h3>
+                        <p class="text-stone-600 text-xs leading-relaxed mb-4">
+                            <strong>Paweł Grabarczyk</strong> is Associate Professor at the IT University of Copenhagen and the University of Lodz. His work bridges analytic philosophy and game studies. He is the author of <I>Directival Theory of Meaning.</I>
+
+                        </p>
+                        <div class="p-3 bg-yellow-50 rounded-lg text-[11px] text-yellow-900 font-mono">
+                            <i class="fa-solid fa-graduation-cap mr-1"></i> IT University of Copenhagen / University of Lodz
+                        </div>
+                    </div>
+
+                   <!-- Book Cover Showcase with Realistic Shadow & Perspective -->
+<div class="group relative flex flex-col items-center justify-center p-6 sm:p-8 rounded-2xl bg-white/40 backdrop-blur-sm border border-slate-200/60 shadow-sm transition-all duration-300 hover:shadow-md">
+    
+    <!-- Outer Perspective Container -->
+    <div class="relative transition-transform duration-500 ease-out transform group-hover:-translate-y-2 group-hover:rotate-1">
+        
+        <!-- Book Shadow (Multi-layered soft ambient shadow) -->
+        <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 w-4/5 h-6 bg-slate-900/20 blur-md rounded-full transition-all duration-500 group-hover:scale-105 group-hover:bg-slate-900/30 group-hover:blur-lg"></div>
+
+        <!-- Book Image Container -->
+        <div class="relative z-10 overflow-hidden rounded-r-md rounded-l-sm shadow-[2px_4px_16px_rgba(15,23,42,0.18),-2px_0_6px_rgba(0,0,0,0.08)] bg-slate-100 border-l-4 border-slate-300">
+            
+            <!-- Book Spine Accent Lighting Overlay -->
+            <div class="absolute inset-y-0 left-0 w-3 bg-gradient-to-r from-black/20 via-black/5 to-transparent z-20 pointer-events-none"></div>
+
+            <!-- Placeholder Book Cover Image (Replace 'src' with your image file path or URL) -->
+            <img 
+                src="img/Cover.jpg" 
+                alt="At the End of the Rainbow Book Cover" 
+                class="w-full max-w-[220px] sm:max-w-[250px] h-auto object-cover block transition-transform duration-500 group-hover:scale-[1.02]"
+                loading="lazy"
+            />
+            
+            <!-- Glossy Highlight Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-white/20 z-20 pointer-events-none"></div>
+        </div>
+    </div>
+
+    <!-- External Book Links Card -->
+<div class="mt-4 p-5 rounded-2xl bg-white/40 backdrop-blur-sm border border-slate-200/60 shadow-sm font-sans text-xs space-y-2.5">
+    <div class="font-pixel text-[10px] text-indigo-600 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+        Quick Links
+    </div>
+
+    <!-- MIT Press Page -->
+    <a href="https://mitpress.mit.edu/9780262054690/at-the-end-of-the-rainbow/" target="_blank" rel="noopener noreferrer" 
+       class="flex items-center justify-between p-2.5 rounded-xl bg-white/80 hover:bg-slate-900 hover:text-white border border-slate-200/80 text-slate-700 font-medium transition-all group shadow-2xs">
+        <span class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-slate-400 group-hover:text-yellow-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+            MIT Press Page
+        </span>
+        <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-white group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+    </a>
+
+    <!-- Order at Amazon -->
+    <a href="https://www.amazon.com/At-End-Rainbow-Identity-Computer/dp/0262054698/ref=sr_1_1?crid=3AAEZIHCBT0ID&dib=eyJ2IjoiMSJ9.dWxvp2l64wIjcQmS3VBsZgCmTwmgdAiAslFB8-dRMce_XbEJUQSRbnhAty3Js57ngTocnu36RZS_NH-izIQwhFWndaJGaD9u10VbmpU2_3EQ8m5QuavRPWRqNuomjasbhi9Gm919O1yEKfHC7ZCAId5Xk9RAuYzac1zYajzywFZDAsfb8WgD99DsLqcZ9hHirT4jRfKwkepvXOBPq5oeOdhoEYTNw7waphWRy2Obqnc.PFcrouP6LpnuK7BFbbh-eVW8Z-bQ22AxEIXsLAZIvw0&dib_tag=se&keywords=grabarczyk&qid=1792930539&sprefix=grabarczyk%2Caps%2C297&sr=8-1" target="_blank" rel="noopener noreferrer" 
+       class="flex items-center justify-between p-2.5 rounded-xl bg-white/80 hover:bg-slate-900 hover:text-white border border-slate-200/80 text-slate-700 font-medium transition-all group shadow-2xs">
+        <span class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-slate-400 group-hover:text-amber-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+            Order at Amazon
+        </span>
+        <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-white group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+    </a>
+
+    <!-- Order at Amazon (EU) -->
+    <a href="https://www.amazon.de/-/en/At-End-Rainbow-Identity-Computer/dp/0262054698/ref=sr_1_1?crid=1I0SDYSA6111J&dib=eyJ2IjoiMSJ9.hqzCIMGu76g2bXXYRtRP1MM8uRL09Q8-KZGq4CnoxCbXIrUbniRigMoYYbajzfrorM7lfmcuTz-ft3RMxx1zcU7Pg7IIURn34VDRJuGV3cid-1mgNiWZ2S9gzQNrz65brMIg8ksjuGZ844yL46qXqJNjlu15k7uBnCVq83rrflWOEyw9Fs4T8QYiPGyhPR9DRIcTHoJlqq7u0ytpS0fh-dNZzwTEj6p9RzADmRaHtic.rr2iS5J2C4O2NysdJuBIB2t6NwSouZmX4gUVTWceW3k&dib_tag=se&keywords=grabarczyk&qid=1792930607&sprefix=grabarczyk%2Caps%2C196&sr=8-1" target="_blank" rel="noopener noreferrer" 
+       class="flex items-center justify-between p-2.5 rounded-xl bg-white/80 hover:bg-slate-900 hover:text-white border border-slate-200/80 text-slate-700 font-medium transition-all group shadow-2xs">
+        <span class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-slate-400 group-hover:text-sky-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 002 2h1.5a2.5 2.5 0 002.5-2.5V7a2 2 0 00-2-2h-2c-.6 0-1.2-.2-1.6-.6L14.5 2"></path></svg>
+            Order at Amazon (EU)
+        </span>
+        <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-white group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+    </a>
+
+    <!-- Read Open Access Version -->
+    <a href="https://doi.org/10.7551/mitpress/15504.001.0001" target="_blank" rel="noopener noreferrer" 
+       class="flex items-center justify-between p-2.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-600 hover:text-white border border-emerald-500/30 text-emerald-800 font-medium transition-all group shadow-2xs">
+        <span class="flex items-center gap-2">
+            <!-- Open Access Unlocked Icon -->
+            <svg class="w-4 h-4 text-emerald-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"></path>
+            </svg>
+            Read Open Access
+        </span>
+        <span class="flex items-center gap-1 font-pixel text-[9px] bg-emerald-200/60 group-hover:bg-emerald-500 text-emerald-900 group-hover:text-white px-1.5 py-0.5 rounded transition-colors">
+            FREE
+            <svg class="w-3 h-3 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+        </span>
+    </a>
+</div>
+
+
+</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- ================================================================= -->
+        <!-- 3. DETAIL VIEW 2: COLOR SUPPLEMENTS -->
+        <!-- ================================================================= -->
+        <div id="detail-supplements" class="view-panel view-hidden max-w-5xl mx-auto px-6 py-10">
+            
+            <div class="mb-8 flex items-center justify-between border-b border-stone-200 pb-4">
+                <button type="button" data-nav="main" 
+                        class="btn-back px-4 py-2 rounded-xl bg-white border border-stone-300 shadow-sm hover:bg-stone-100 hover:border-stone-400 text-stone-800 font-pixel text-xs flex items-center gap-2 transition-all cursor-pointer z-10">
+                    <i class="fa-solid fa-chevron-left text-pink-500 pointer-events-none"></i>
+                    <span class="pointer-events-none">← BACK TO MAIN GRID</span>
+                </button>
+                <span class="font-pixel text-xs text-pink-600 bg-pink-100 px-3 py-1.5 rounded-lg border border-pink-200">
+                    02: COLOR SUPPLEMENTS
+                </span>
+            </div>
+
+            <div class="bg-gradient-to-r from-pink-100 via-purple-100 to-indigo-100 rounded-3xl p-8 sm:p-12 border border-pink-200 shadow-md mb-10">
+                <h1 class="font-extrabold text-3xl sm:text-5xl text-stone-950 tracking-tight mb-3">
+                    Color Supplements
+                </h1>
+                <p class="text-stone-700 text-base sm:text-lg max-w-2xl">
+                    Color versions of the figures found in the book.
+                </p>
+            </div>
+
+            <!-- Gallery Grid with Interactive Lightbox Thumbnails -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                
+              <!-- Figure 1.1 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_01-01.png', 'FIGURE 1.1: Atari 400', 'Photo by Evan Amos, Creative Commons Attribution. Share Alike 3.0 Unported license, no changes made.')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_01-01.png" 
+                                 alt="Atari 400" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 1.1</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            ATARI 400
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                           Photo by Evan Amos, Creative Commons Attribution Share Alike 3.0 Unported license, no changes made.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                      <!-- Figure 1.2 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_01-02.jpeg', 'FIGURE 1.2         : Atari 800', 'Atari 800. Photo by Bilby, Creative Commons Attribution Share Alike 3.0 Unported license, no changes made.')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_01-02.jpeg" 
+                                 alt="Atari 800" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 1.2</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            ATARI 800
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Atari 800. Photo by Bilby, Creative Commons Attribution Share Alike 3.0 Unported license, no changes made.                        
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                      <!-- Figure 1.3 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_01-03.png', 'FIGURE 1.3: Atari 5200', 'Photo by Daniel McConnell. Creative Commons Attribution Share Alike 2.0 Generic license, no changes made.')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_01-03.png" 
+                                 alt="Atari 5200" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 1.3</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            ATARI 5200
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Atari 5200. Photo by Daniel McConnell. Creative Commons Attribution Share Alike 2.0 Generic license, no changes made.                  
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                       <!-- Figure 1.4 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_01-04.jpeg', 'FIGURE 1.4: Atari 800XL', 'Atari 800XL. Photo by Evan Amos, Creative Commons Attribution Share Alike 3.0 Unported license, no changes made.')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_01-04.jpeg" 
+                                 alt="Atari 800XL" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 1.4</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            ATARI 800XL
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Atari 800XL. Photo by Evan Amos, Creative Commons Attribution Share Alike 3.0 Unported license, no changes made.                  
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                            <!-- Figure 1.5 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_01-05.jpg', 'FIGURE 1.5: Atari 130XE', 'Atari 130XE. Photo by Raimond Spekking, Creative Commons license CC BY-­ SA 4.0 license, no changes made.')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_01-05.jpg" 
+                                 alt="Atari 130XE" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 1.5</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            ATARI 130XE
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Atari 130XE. Photo by Raimond Spekking, Creative Commons license CC BY-­ SA 4.0 license, no changes made.             
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                                       <!-- Figure 1.6 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_01-06.jpeg', 'FIGURE 1.6: Atari XEGS', 'Atari XEGS. Photo by Bilby, Creative Commons Attribution 3.0 Unported license, no changes made.')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_01-06.jpeg" 
+                                 alt="Atari XEGS" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 1.6</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            ATARI XEGS
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Atari XEGS. Photo by Bilby, Creative Commons Attribution 3.0 Unported license, no changes made.        
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                                             <!-- Figure 1.7 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_01-07.png', 'FIGURE 1.7: BASIC, mixed screen mode', 'BASIC, mixed screen mode. Source: Author created.')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_01-07.png" 
+                                 alt="BASIC, mixed screen mode" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 1.7</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            BASIC
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            BASIC, mixed screen mode. Source: Author created.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                                                    <!-- Figure 2.1 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_02-01.png', 'FIGURE 2.1: Player/Missile Graphics.', 'Player/Missile Graphics. Source: Author created.')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_02-01.png" 
+                                 alt="Player/Missile Graphics" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 2.1</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Player/Missile Graphics
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Player/Missile Graphics. Source: Author created.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                                                 <!-- Figure 2.2 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_02-02.png', 'FIGURE 2.2: Mickey in the Great Outdoors gameplay. ', 'Screenshot, Walt Disney Productions, Atari, 1983')""
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_02-02.png" 
+                                 alt="Mickey in the Great Outdoors gameplay" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 2.2</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Mickey in the Great Outdoors gameplay
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Mickey in the Great Outdoors gameplay. Source: Screenshot, Walt Disney Productions, Atari, 1983.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                                            <!-- Figure 2.3 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_02-03.png', 'FIGURE 2.3: Energy Czar gameplay.', 'Screenshot, Atari, 1980.')""
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_02-03.png" 
+                                 alt="Energy Czar gameplay" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 2.3</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Energy Czar gameplay
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Energy Czar gameplay. Screenshot, Atari, 1980.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                                           <!-- Figure 2.4 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_02-04.png', 'FIGURE 2.4: SCRAM gameplay.', 'Screenshot, Atari, 1980.')""
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_02-04.png" 
+                                 alt="SCRAM gameplay" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 2.3</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            SCRAM gameplay
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            SCRAM gameplay. Screenshot, Atari, 1980.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                                            <!-- Figure 4.1 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_04-01.png', 'FIGURE 4.1: ATASCII Picture.',)""
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_04-01.png" 
+                                 alt="ATASCII Picture" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 4.1</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            ATASCII Picture
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            ATASCII Picture.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                                            <!-- Figure 4.2 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_04-02.png', 'FIGURE 4.2: AtariWriter.', 'Screenshot, Atari, 1982.')""
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_04-02.png" 
+                                 alt="AtariWriter" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 4.2</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            AtariWriter
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            AtariWriter. Screenshot, Atari, 1982.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                                             <!-- Figure 4.3 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_04-03.png', 'FIGURE 4.3: Atari Artist interface..', 'Screenshot, Atari, 1983.')""
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_04-03.png" 
+                                 alt="Atari Artist interface" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 4.3</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Atari Artist interface
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Atari Artist interface. Screenshot, Atari, 1983.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                                                   <!-- Figure 4.4 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_04-04.png', 'FIGURE 4.4: Albert - a modern game putting display interrupts to use.', 'Screenshot, public domain, 2021.')""
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_04-04.png" 
+                                 alt="Atari Artist interface" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 4.4</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Albert - a modern game putting display interrupts to use.
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Screenshot, public domain, 2021.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+
+                                                   <!-- Figure 5.1 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_05-01.png', 'FIGURE 5.1: Star Raiders.', 'Screenshot, Atari 1979.')"
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_05-01.png" 
+                                 alt="Star Raiders" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 5.1</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Star Raiders
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Screenshot, Atari 1979.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                                                  <!-- Figure 5.2 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_05-02.png', 'FIGURE 5.2: Getaway! Screenshot.', 'Mark Reid, APX, 1982.')"
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_05-02.png" 
+                                 alt="Getaway!" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 5.2</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Getaway!
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Screenshot, Mark Reid, APX, 1982.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                                            <!-- Figure 5.3 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_05-03.png', 'FIGURE 5.3: Eastern Front (1941).', 'Screenshot, Chris Crawford, Atari, 1982.')"
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_05-03.png" 
+                                 alt="Eastern Front (1941)" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 5.3</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Eastern Front (1941)
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Screenshot, Chris Crawford, Atari, 1982.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                                             <!-- Figure 6.1 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_06-01.png', 'FIGURE 6.1: Atari 5200 joystick.')"
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_06-01.png" 
+                                 alt="Atari 5200 joystick" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 6.1</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Atari 5200 joystick
+                        </h3>
+                       
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                                   <!-- Figure 6.2 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_06-02.png', 'FIGURE 6.2: Rescue on Fractalus.', 'Screenshot, Lucasfilm Games, Epyx, 1985.')"
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_06-02.png" 
+                                 alt="Rescue on Fractalus" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 6.2</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Rescue on Fractalus
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Screenshot, Lucasfilm Games, Epyx, 1985.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                                 <!-- Figure 6.3 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_06-03.png', 'FIGURE 6.3: Rescue on Fractalus, the mothership.', 'Screenshot, Lucasfilm Games, Epyx, 1985.')"
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_06-03.png" 
+                                 alt="Rescue on Fractalus" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 6.2</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Rescue on Fractalus, the mothrship
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Screenshot, Lucasfilm Games, Epyx, 1985.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                         <!-- Figure 6.4 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_06-04.jpg', 'FIGURE 6.4: Atari XEGS with the keyboard add-on.', 'Photo by Raimond Spekking, Creative Commons license CC BY-­ SA 4.0 license, no changes made.')"
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_06-04.jpg" 
+                                 alt="Atari XEGS with the keyboard add-on" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 6.4</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Atari XEGS with the keyboard add-on
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Photo by Raimond Spekking, Creative Commons license CC BY-­ SA 4.0 license, no changes made.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                    <!-- Figure 7.1 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_07-01.png', 'FIGURE 7.1: Montezuma’s Revenge.', 'Screenshot, Utopia Software, Parker ­Brothers, 1985.')"
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_07-01.png" 
+                                 alt="Montezuma’s Revenge" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 7.1</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Montezuma’s Revenge
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Screenshot, Utopia Software, Parker ­Brothers, 1985.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                        <!-- Figure 7.2 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_07-02.png', 'FIGURE 7.2: Draconus on the Atari 8-­ bit.', 'Screenshot, Zeppelin Games, Cognito, 1988.')"
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_07-02.png" 
+                                 alt="Draconus on the Atari 8-bit" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 7.2</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Draconus on the Atari 8-bit
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Screenshot, Zeppelin Games, Cognito, 1988.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                        <!-- Figure 7.3 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_07-03.png', 'FIGURE 7.3: Draconus on the Commodore 64.', 'Screenshot, Zeppelin Games, Cognito, 1988.')"
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_07-03.png" 
+                                 alt="Draconus on the Commodore 64" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 7.3</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Draconus on the Commodore 64
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Screenshot, Zeppelin Games, Cognito, 1988.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                         <!-- Figure 7.4 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_07-04.png', 'FIGURE 7.4: Blinky’s Scary School. Another example of the monochromatic aesthetics.', 'Screenshot, Zeppelin Games, 1990.')"
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_07-04.png" 
+                                 alt="Blinky’s Scary School" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 7.4</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Blinky’s Scary School. Another example of the monochromatic aesthetics.
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Screenshot, Zeppelin Games, 1990.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                        <!-- Figure 8.1 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_08-01.jpg', 'FIGURE 8.1: Elwro 800 ­ Junior.', 'Photo by Marcin Robert Kaźmierczak, Creative Commons Attribution 3.0 Unported license.')"
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_08-01.jpg" 
+                                 alt="Elwro 800 ­ Junior" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 8.1</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Elwro 800 ­ Junior.
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Photo by Marcin Robert Kaźmierczak, Creative Commons Attribution 3.0 Unported license.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                  <!-- Figure 8.2 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_08-02.png', 'FIGURE 8.2: Webmaster.', 'Screenshot, unreleased prototype.')"
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_08-02.png" 
+                                 alt="Webmaster" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 8.2</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Webmaster.
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Screenshot, unreleased prototype.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                      <!-- Figure 8.3 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_08-03.png', 'FIGURE 8.3: Hexan.', 'Screenshot, Rabbit Software, KAW, 1987.')"
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_08-03.png" 
+                                 alt="Hexan" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 8.3</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Hexan.
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Screenshot, Rabbit Software, KAW, 1987.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                    <!-- Figure 8.4 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_08-04.png', 'FIGURE 8.4: Arkanoid II.', 'Screenshot, Pink Softhard.')"
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_08-04.png" 
+                                 alt="Arkanoid II" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 8.4</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Arkanoid II
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Screenshot, Pink Softhard.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                   <!-- Figure 8.5 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_08-05.png', 'FIGURE 8.5: Kolony.', 'Screenshot, Janusz Bie, Mirage Software, 1990.')"
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_08-05.png" 
+                                 alt="Kolony" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 8.5</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Kolony
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Screenshot, Janusz Bie, Mirage Software, 1990.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                     <!-- Figure 8.6 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_08-06.png', 'FIGURE 8.6: Robbo.', 'Screenshot, Janusz Pelc, LKK Avalon, 1989.')"
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_08-06.png" 
+                                 alt="Kolony" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 8.6</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Robbo
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Screenshot, Janusz Pelc, LKK Avalon, 1989.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                      <!-- Figure 9.1 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_09-01.png', 'FIGURE 9.1: Heartlight VBXE.', 'An example of graphics achieved with the VBXE card.')"
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_09-01.png" 
+                                 alt="Kolony" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 9.1</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Heartlight VBXE
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            An example of graphics achieved with the VBXE card.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                      <!-- Figure 9.2 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_09-02.png', 'FIGURE 9.2: Laura. Title screen.', 'Screenshot, Arsoft Corporation, 2016.')"
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_09-02.png" 
+                                 alt="Kolony" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 9.2</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Laura. Title screen
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Screenshot, Arsoft Corporation, 2016.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                       <!-- Figure 9.3 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_09-03.png', 'FIGURE 9.3: Numen. The opening 3D engine scene.', 'Screenshot, Taquart, public domain, 2002.')"
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_09-03.png" 
+                                 alt="Kolony" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 9.3</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Numen. The opening 3D engine scene
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Screenshot, Taquart, public domain, 2002.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                     <!-- Figure 9.4 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_09-04.png', 'FIGURE 9.4: Numen. The bump mapping effect.', 'Screenshot, Taquart, public domain, 2002.')"
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_09-04.png" 
+                                 alt="Kolony" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 9.4</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                            Numen. The bump mapping effect
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Screenshot, Taquart, public domain, 2002.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                      <!-- Figure 9.5 -->
+                <div onclick="openLightbox('img/Grabarczyk_fig_09-05.png', 'FIGURE 9.5: Numen. Yoomp', 'Screenshot, public domain, 2008.')"
+')" 
+                     class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 bg-stone-100 rounded-xl mb-4 overflow-hidden border border-stone-200 relative group">
+                            <img src="img/Grabarczyk_fig_09-05.png" 
+                                 alt="Kolony" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 font-pixel text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand text-pink-500"></i> ENLARGE
+                                </span>
+                            </div>
+                        </div>
+                        <span class="font-pixel text-[10px] text-pink-600 uppercase block mb-1">Figure 9.5</span>
+                        <h3 class="font-bold text-stone-900 text-base mb-2 group-hover:text-pink-600 transition-colors">
+                           Yoomp
+                        </h3>
+                        <p class="text-stone-600 text-xs leading-relaxed">
+                            Screenshot, public domain, 2008.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                        <span>CLICK TO ENLARGE</span>
+                        <span class="text-pink-500 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <!-- ================================================================= -->
+        <!-- 4. DETAIL VIEW 3: RELATED EVENTS -->
+        <!-- ================================================================= -->
+        <div id="detail-events" class="view-panel view-hidden max-w-5xl mx-auto px-6 py-10">
+            
+            <div class="mb-8 flex items-center justify-between border-b border-stone-200 pb-4">
+                <button type="button" data-nav="main" 
+                        class="btn-back px-4 py-2 rounded-xl bg-white border border-stone-300 shadow-sm hover:bg-stone-100 hover:border-stone-400 text-stone-800 font-pixel text-xs flex items-center gap-2 transition-all cursor-pointer z-10">
+                    <i class="fa-solid fa-chevron-left text-indigo-500 pointer-events-none"></i>
+                    <span class="pointer-events-none">← BACK TO MAIN GRID</span>
+                </button>
+                <span class="font-pixel text-xs text-indigo-600 bg-indigo-100 px-3 py-1.5 rounded-lg border border-indigo-200">
+                    03: RELATED EVENTS
+                </span>
+            </div>
+
+            <div class="bg-gradient-to-r from-indigo-100 via-blue-100 to-teal-100 rounded-3xl p-8 sm:p-12 border border-indigo-200 shadow-md mb-10">
+                <h1 class="font-extrabold text-3xl sm:text-5xl text-stone-950 tracking-tight mb-3">
+                    Events & Keynotes
+                </h1>
+                <p class="text-stone-700 text-base sm:text-lg max-w-2xl">
+                    Upcoming talks, book presentations, retrogaming conventions, and online lectures by author Paweł Grabarczyk.
+                </p>
+            </div>
+
+            <div class="space-y-4">
+<div class="relative bg-white p-6 rounded-2xl border border-stone-200 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4 group hover:border-indigo-300 hover:shadow-md transition-all">                    <div>
+                                
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="font-pixel text-[10px] text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">IN-PERSON</span>
+                            <span class="text-xs font-mono text-stone-500">IT University of Copenhagen</span>
+                        </div>
+                        <h3 class="font-bold text-stone-900 text-base">13.11.2026 - Book Launch & Keynote Presentation</h3>
+                        <p class="text-stone-600 text-xs mt-1">More details coming soon.</p>
+                    </div>
+                  
+                </div>
+            
+            
+<div class="relative bg-white p-6 rounded-2xl border border-stone-200 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4 group hover:border-indigo-300 hover:shadow-md transition-all">                
+                    
+                    <div>
+                       <a href="https://sillyventure.eu/pl/start" target="_blank" rel="noopener noreferrer" class="absolute inset-0 z-10 rounded-2xl" aria-label="Book Launch Details"></a>
+                        <div class="flex items-center gap-2 mb-1"> 
+                            <span class="font-pixel text-[10px] text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">IN-PERSON</span>
+                            <span class="text-xs font-mono text-stone-500">Silly Venture 2026, Gdańsk, Poland</span>
+                        </div>
+                        <h3 class="font-bold text-stone-900 text-base">14.11.2026, 15.00 - Book Presentation</h3>
+                        <p class="text-stone-600 text-xs mt-1">I will be presenting the book during one of the biggest Polish Atari retro events.</p>
+                    </div>
+                  
+                </div>
+               
+               
+ <div class="relative bg-white p-6 rounded-2xl border border-stone-200 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4 group hover:border-indigo-300 hover:shadow-md transition-all">                
+                    
+                    <div>
+                       <a href="https://ec1lodz.pl/kalendarz-wydarzen/spotkanie-autorskie-z-pawlem-grabarczykiem-wokol-at-the-end-of-the-rainbow-the-identity-crisis-of-the-atari-8-bit-computer" target="_blank" rel="noopener noreferrer" class="absolute inset-0 z-10 rounded-2xl" aria-label="Book Launch Details"></a>
+                        <div class="flex items-center gap-2 mb-1"> 
+                            <span class="font-pixel text-[10px] text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">IN-PERSON</span>
+                            <span class="text-xs font-mono text-stone-500">EC1, Łódź, Poland</span>
+                        </div>
+                        <h3 class="font-bold text-stone-900 text-base">15.11.2026, 15.00 - Spotkanie autorskie.</h3>
+                        <p class="text-stone-600 text-xs mt-1">15 listopada będę miał przyjemność gościć w łódzkim Centrum Komiksu i Narracji Interaktywnej EC1 na spotkaniu autorskim..</p>
+                    </div>
+                  
+                </div>
+
+             
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ================================================================= -->
+        <!-- 5. DETAIL VIEW 4: REVIEWS & PRESS -->
+        <!-- ================================================================= -->
+        <div id="detail-reviews" class="view-panel view-hidden max-w-5xl mx-auto px-6 py-10">
+            
+            <div class="mb-8 flex items-center justify-between border-b border-stone-200 pb-4">
+                <button type="button" data-nav="main" 
+                        class="btn-back px-4 py-2 rounded-xl bg-white border border-stone-300 shadow-sm hover:bg-stone-100 hover:border-stone-400 text-stone-800 font-pixel text-xs flex items-center gap-2 transition-all cursor-pointer z-10">
+                    <i class="fa-solid fa-chevron-left text-purple-500 pointer-events-none"></i>
+                    <span class="pointer-events-none">← BACK TO MAIN GRID</span>
+                </button>
+                <span class="font-pixel text-xs text-purple-600 bg-purple-100 px-3 py-1.5 rounded-lg border border-purple-200">
+                    04: REVIEWS & PRESS
+                </span>
+            </div>
+
+            <div class="bg-gradient-to-r from-purple-100 via-pink-100 to-yellow-100 rounded-3xl p-8 sm:p-12 border border-purple-200 shadow-md mb-10">
+                <h1 class="font-extrabold text-3xl sm:text-5xl text-stone-950 tracking-tight mb-3">
+                    Critical Reception & Reviews
+                </h1>
+                <p class="text-stone-700 text-base sm:text-lg max-w-2xl">
+                    Academic reviews, retro tech journal features, and praise for "At the End of the Rainbow".
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm relative">
+                    <div class="flex text-amber-400 text-xs gap-1 mb-3">
+                    </div>
+                    <blockquote class="text-stone-700 text-sm italic mb-4">
+                        "A fun and meticulous history, At the End of the Rainbow shows us how Atari’s 8-bit computers were adopted in surprising, different, and previously untold ways, in North America, in Poland, and around the world."
+                    </blockquote>
+                    <div class="font-mono text-xs text-stone-500">— Jesper Juul, author of Too Much Fun: The Five Lives of the Commodore 64 Computer</div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm relative">
+                    <div class="flex text-amber-400 text-xs gap-1 mb-3">
+                    </div>
+                    <blockquote class="text-stone-700 text-sm italic mb-4">
+                        "Just when you think Atari has been done to death, At the End of the Rainbow shows you how much is left to learn. Focusing on the company’s often overlooked 8-bit computer family, this is a savvy exploration of what was at stake for Atari in its worldwide effort to carve out a space for itself in the home computer wars of the 1980s."
+                    </blockquote>
+                    <div class="font-mono text-xs text-stone-500">— Laine Nooney, author of The Apple II Age: How the Computer Became Personal</div>
+                </div>
+
+                 <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm relative">
+                    <div class="flex text-amber-400 text-xs gap-1 mb-3">
+                    </div>
+                    <blockquote class="text-stone-700 text-sm italic mb-4">
+                        "What is At the End of Rainbow? Grabarczyk’s book is a pot of gold, scanning the horizons of Atari’s hazy 8-bit computing histories, from the firm’s Sunnyvale origins to its hidden pasts in socialism and South America."
+                    </blockquote>
+                    <div class="font-mono text-xs text-stone-500">— Alex Wade, author of The Pac-Man Principle: A User’s Guide to Capitalism</div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="border-t border-stone-200 bg-white py-8 px-6 text-center mt-12">
+        <div class="max-w-5xl mx-auto space-y-2">
+            <div class="flex justify-center items-center gap-1.5 font-pixel text-xs text-stone-800">
+                <span>AT THE END OF THE RAINBOW</span>
+            </div>
+            <p class="text-xs text-stone-500 font-mono">
+                The Identity Crisis of the Atari 8-Bit Computer • Paweł Grabarczyk
+            </p>
+            <p class="text-[10px] text-stone-400 font-mono pt-2">
+                Published by MIT Press
+            </p>
+        </div>
+    </footer>
+
+    <!-- Full-Screen Interactive Lightbox Overlay -->
+    <div id="lightbox" 
+         onclick="closeLightbox()" 
+         class="lightbox-overlay inactive fixed inset-0 z-50 bg-stone-950/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-8 cursor-pointer">
+        
+        <!-- Close Button -->
+        <button onclick="closeLightbox()" 
+                type="button" 
+                class="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors border border-white/20 font-pixel text-xs z-20">
+            <i class="fa-solid fa-xmark text-base"></i>
+        </button>
+
+        <div class="lightbox-content max-w-5xl w-full flex flex-col items-center justify-center max-h-full cursor-auto" onclick="event.stopPropagation()">
+            <!-- Click image to close -->
+            <div class="relative group cursor-pointer" onclick="closeLightbox()">
+                <img id="lightbox-img" src="" alt="Full-size supplement plate" class="max-h-[75vh] w-auto max-w-full rounded-2xl shadow-2xl border border-white/20 object-contain mx-auto" />
+                <div class="absolute inset-0 bg-stone-950/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl flex items-center justify-center">
+                    <span class="bg-stone-900/90 text-white font-pixel text-xs px-3 py-1.5 rounded-lg border border-white/20">
+                        <i class="fa-solid fa-compress mr-1"></i> CLICK ANYWHERE TO CLOSE
+                    </span>
+                </div>
+            </div>
+
+            <!-- Title & Caption -->
+            <div class="text-center mt-4 max-w-2xl px-4">
+                <h3 id="lightbox-title" class="font-pixel text-sm text-pink-300 mb-1 tracking-wide"></h3>
+                <p id="lightbox-caption" class="text-stone-300 text-xs sm:text-sm font-sans leading-relaxed"></p>
+                <div class="mt-3 text-[10px] font-pixel text-stone-500 uppercase tracking-widest">
+                    [ PRESS ESC OR CLICK IMAGE TO RETURN TO GALLERY ]
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Navigation & Lightbox Logic -->
+    <script>
+        function navigateTo(targetViewId) {
+            // Hide all views
+            const allViews = document.querySelectorAll('.view-panel');
+            allViews.forEach(view => {
+                view.classList.remove('view-visible');
+                view.classList.add('view-hidden');
+            });
+
+            // Target view element
+            const targetView = document.getElementById(targetViewId.startsWith('detail-') || targetViewId === 'main-view' ? targetViewId : (targetViewId === 'main' ? 'main-view' : 'detail-' + targetViewId));
+            if (targetView) {
+                targetView.classList.remove('view-hidden');
+                targetView.classList.add('view-visible');
+            }
+
+            // Update status bar header text
+            const statusElem = document.getElementById('nav-status');
+            if (statusElem) {
+                if (targetViewId === 'main' || targetViewId === 'main-view') {
+                    statusElem.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span><span>SYSTEM: MAIN GRID</span>`;
+                } else {
+                    const moduleName = targetViewId.replace('detail-', '').toUpperCase();
+                    statusElem.innerHTML = `<span class="w-2 h-2 rounded-full bg-pink-500 animate-pulse"></span><span> [${moduleName}]</span>`;
+                }
+            }
+
+            // Smooth scroll to top when changing views
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* Lightbox logic */
+        function openLightbox(imageSrc, title, caption) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxTitle = document.getElementById('lightbox-title');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+
+            lightboxImg.src = imageSrc;
+            lightboxTitle.textContent = title || '';
+            lightboxCaption.textContent = caption || '';
+
+            lightbox.classList.remove('inactive');
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent page scroll when open
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            lightbox.classList.add('inactive');
+            document.body.style.overflow = ''; // Restore scroll
+        }
+
+        // Attach robust event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Global delegated click listener for navigation buttons
+            document.addEventListener('click', (event) => {
+                const backBtn = event.target.closest('[data-nav], .btn-back');
+                if (backBtn) {
+                    const target = backBtn.getAttribute('data-nav') || 'main';
+                    navigateTo(target);
+                }
+            });
+
+            // Close lightbox on Escape key
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    closeLightbox();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
